@@ -13,6 +13,10 @@ repositories {
         name = "velocloud-snapshots"
         url = uri("https://repo.snenjih.de/snapshots")
     }
+    maven {
+        name = "velocloud-releases"
+        url = uri("https://repo.snenjih.de/releases")
+    }
 }
 
 dependencies {

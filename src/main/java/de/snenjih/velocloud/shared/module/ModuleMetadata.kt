@@ -1,0 +1,24 @@
+package de.snenjih.velocloud.shared.module
+
+/**
+ * Represents metadata information for a module in the system.
+ *
+ * @property id the unique identifier of the module
+ * @property name the human-readable name of the module
+ * @property version the version of the module
+ * @property description a brief description of what the module does
+ * @property author the author of the module
+ * @property main the fully qualified main class of the module
+ * @property loadOrder when the module should be loaded (STARTUP, POST_STARTUP, LATE)
+ * @property apiVersion the VeloCloud API version this module was built for
+ */
+data class ModuleMetadata(
+    val id: String,
+    val name: String,
+    val version: String,
+    val description: String,
+    val author: String,
+    val main: String,
+    val loadOrder: LoadOrder,
+    val apiVersion: String
+)

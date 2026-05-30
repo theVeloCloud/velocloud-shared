@@ -1,24 +1,23 @@
 plugins {
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
     kotlin("jvm") version "2.3.0"
     `maven-publish`
 }
 
-group = "dev.httpmarco.polocloud"
+group = "de.snenjih.velocloud"
 version = "3.0.0-pre.8-SNAPSHOT"
 
 repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        name = "polocloud-snapshots"
-        url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+        name = "velocloud-snapshots"
+        url = uri("https://repo.snenjih.de/snapshots")
     }
 }
 
 dependencies {
     compileOnly("com.google.code.gson:gson:2.13.2")
-    compileOnly("dev.httpmarco.polocloud:proto:$version")
+    compileOnly("de.snenjih.velocloud:proto:$version")
 }
 
 kotlin {
@@ -32,9 +31,9 @@ publishing {
             artifact(tasks.jar.get())
 
             pom {
-                name.set("polocloud-proto")
-                description.set("PoloCloud gRPC API with bundled dependencies")
-                url.set("https://github.com/thePolocloud/polocloud")
+                name.set("velocloud-shared")
+                description.set("VeloCloud shared interfaces and types")
+                url.set("https://github.com/theVeloCloud/velocloud")
 
                 licenses {
                     license {
@@ -49,24 +48,27 @@ publishing {
                     }
                 }
                 scm {
-                    url.set("https://github.com/thePolocloud/polocloud")
-                    connection.set("scm:git:https://github.com/thePolocloud/polocloud.git")
-                    developerConnection.set("scm:git:https://github.com/thePolocloud/polocloud.git")
+                    url.set("https://github.com/theVeloCloud/velocloud")
+                    connection.set("scm:git:https://github.com/theVeloCloud/velocloud.git")
+                    developerConnection.set("scm:git:https://github.com/theVeloCloud/velocloud.git")
                 }
             }
         }
     }
-}
 
-nexusPublishing {
     repositories {
-        sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/releases/"))
-            snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
-
-            username.set(System.getenv("ossrhUsername") ?: "")
-            password.set(System.getenv("ossrhPassword") ?: "")
+        maven {
+            name = "reposilite"
+            url = uri(
+                if (version.toString().endsWith("-SNAPSHOT"))
+                    "https://repo.snenjih.de/snapshots"
+                else
+                    "https://repo.snenjih.de/releases"
+            )
+            credentials {
+                username = System.getenv("REPOSILITE_USER") ?: ""
+                password = System.getenv("REPOSILITE_SECRET") ?: ""
+            }
         }
     }
-    useStaging.set(!project.rootProject.version.toString().endsWith("-SNAPSHOT"))
 }

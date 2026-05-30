@@ -1,12 +1,12 @@
 ```kotlin
 repositories {
     maven {
-        name = "polocloud-snapshots"
-        url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+        name = "velocloud-snapshots"
+        url = uri("https://repo.snenjih.de/snapshots")
     }
 }
 
 dependencies {
-    implementation("dev.httpmarco.polocloud:shared:3.0.0-pre.8-SNAPSHOT")
+    implementation("de.snenjih.velocloud:shared:3.0.0-pre.8-SNAPSHOT")
 }
 ```
